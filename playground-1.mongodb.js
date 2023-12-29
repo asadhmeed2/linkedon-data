@@ -58,3 +58,40 @@ db.linkedon.aggregate([
     }
 ])
 
+// extension 2
+db.linkedon.aggregate([
+    {
+        $match:{
+            currentPosition: "Analyst"
+        }
+    },
+    {
+        $group: {
+          _id: "$currentCompany.name",
+          averageSalary: {
+            $avg: "$salary"
+          }
+        }
+    }
+])
+
+// extension 3
+db.linkedon.aggregate([
+    {
+        $match:{
+            "currentCompany.name": {$in:["Google","Apple"]},
+            "currentCompany.industry": "Tech",
+
+        }
+    },
+    {
+        $group: {
+          _id: "$lastName",
+          average: {
+            $avg: "$salary"
+          }
+        }
+    },
+    {$sort:{"average":-1}}
+])
+
