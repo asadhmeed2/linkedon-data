@@ -41,3 +41,20 @@ db.linkedon.count({
     {previousCompanies:{$elemMatch:{name:"Apple"}}}]
 })
 
+// extension 1
+db.linkedon.aggregate([
+    {
+        $match:{
+            "currentCompany.name":"Apple"
+        }
+    },
+    {
+        $group: {
+          _id: "$currentCompany.industry",
+          count: {
+            $sum: 1
+          }
+        }
+    }
+])
+
