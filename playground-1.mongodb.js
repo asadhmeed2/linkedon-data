@@ -1,7 +1,7 @@
 
 use('test-db');
 
-// db.linkedon.find({})
+// db.linkedon.count({})
 
 //ex1
 // db.linkedon.count({
@@ -19,4 +19,34 @@ use('test-db');
 //     salary: {$gte:7000}
 // })
 
+//ex4
+// db.linkedon.find({
+//         "currentCompany.industry":{$in:["Sales","Retail"]}
+// },{
+//     _id:0,
+//     "currentCompany.name":1,
+//     fullName:"$firstName $lastName"
+// })
+
+// ex4
+// db.linkedon.aggregate([
+//     {
+//         $match: {
+//         "currentCompany.industry": { $in: ["Sales", "Retail"] }
+//         }
+//     },
+//     {
+//     $project: {
+//         _id: 0,
+//         fullname: {
+//             $concat: ["$firstName", " ", "$lastName"]
+//         },
+//         salary: 1,
+//         currentCompanyName: "$currentCompany.name"
+//     }
+//     },
+//     {$sort:{salary:-1}}
+//     ,
+//     {$limit: 1}
+// ])
 
